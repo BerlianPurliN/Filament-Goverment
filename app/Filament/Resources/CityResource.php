@@ -12,6 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Get;
 
 class CityResource extends Resource
 {
@@ -34,6 +35,11 @@ class CityResource extends Resource
                     ->preload(),
                 Forms\Components\TextInput::make('name')
                     ->required()
+                    ->rule(function(Get $get, $record){
+                        $recordId = $record?->id;
+                        $countryId = $get('country_id');
+                        return "unique:states,name, $recordId ,id,country_id, $countryId";
+                    })
                     ->maxLength(255)
                     ->label('Nama Kota'),
             ]);

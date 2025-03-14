@@ -28,6 +28,7 @@ class DepartmentResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required()
+                    ->unique(ignoreRecord: true)
                     ->label('Departemen')
                     ->maxLength(255),
             ]);
@@ -40,6 +41,10 @@ class DepartmentResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
                     ->label('Departemen')
+                    ->sortable(),
+                    Tables\Columns\TextColumn::make('employees_count')->counts('employees')
+                    ->searchable()
+                    ->label('Karyawan')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

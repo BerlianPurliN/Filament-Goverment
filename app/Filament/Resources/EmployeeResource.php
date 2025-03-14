@@ -91,8 +91,12 @@ class EmployeeResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->sortable()
+                    ->label('Nama')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('address')
+                    ->sortable()
+                    ->label('Alamat')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('date_hired')
                     ->date()
@@ -136,8 +140,8 @@ class EmployeeResource extends Resource
         return [
             'index' => Pages\ListEmployees::route('/'),
             'create' => Pages\CreateEmployee::route('/create'),
-            'view' => Pages\ViewEmployee::route('/{record}'),
-            'edit' => Pages\EditEmployee::route('/{record}/edit'),
+            // 'view' => Pages\ViewEmployee::route('/{record}'),
+            // 'edit' => Pages\EditEmployee::route('/{record}/edit'),
         ];
     }
 }
