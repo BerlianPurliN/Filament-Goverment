@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Department;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class DepartmentApiController extends Controller
 {
@@ -25,7 +26,26 @@ class DepartmentApiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(
+                [
+                    'status' => false,
+                    'message' => 'validasi error',
+                    'error' => $validator->errors()
+                ],422);
+        }
+
+        $department = Department::create($request->all());
+        return response()->json(
+            [
+                'status' => 'success',
+                'message' => 'Department created successfully',
+                'data' => $department
+            ],201);
     }
 
     /**

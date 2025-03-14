@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class EmployeeApiController extends Controller
 {
@@ -25,7 +26,34 @@ class EmployeeApiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'address' => 'required',
+            'zip_code' => 'required',
+            'date_hired' => 'required',
+            'date_of_birth' => 'required',
+            'country_id' => 'required',
+            'state_id' => 'required',
+            'city_id' => 'required',
+            'department_id' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(
+                [
+                    'status' => false,
+                    'message' => 'validasi error',
+                    'error' => $validator->errors()
+                ],422);
+        }
+
+        $employee = Employee::create($request->all());
+        return response()->json(
+            [
+                'status' => 'success',
+                'message' => 'Employee created successfully',
+                'data' => $employee
+            ],201);
     }
 
     /**

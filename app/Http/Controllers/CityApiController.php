@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\City;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CityApiController extends Controller
 {
@@ -25,7 +26,27 @@ class CityApiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'state_id' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(
+                [
+                    'status' => false,
+                    'message' => 'validasi error',
+                    'error' => $validator->errors()
+                ],422);
+        }
+
+        $city = City::create($request->all());
+        return response()->json(
+            [
+                'status' => 'success',
+                'message' => 'City created successfully',
+                'data' => $city
+            ],201);
     }
 
     /**

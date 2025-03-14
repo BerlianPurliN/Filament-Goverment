@@ -25,12 +25,12 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('employees', function (Blueprint $table) {
-            $table->dropColumn('country_id', 'state_id', 'city_id', 'department_id', 'zip_code');
-            $table->dropForeign(['country_id']);
-            $table->dropForeign(['state_id']);
-            $table->dropForeign(['city_id']);
-            $table->dropForeign(['department_id']);
-        });
+        // Schema::table('employees', function (Blueprint $table) {
+        //     $table->dropColumn('country_id', 'state_id', 'city_id', 'department_id', 'zip_code');
+        //     $table->dropForeign(['country_id']);
+        //     $table->dropForeign(['state_id']);
+        //     $table->dropForeign(['city_id']);
+        //     $table->dropForeign(['department_id']);
+        // });
     }
 };

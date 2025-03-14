@@ -17,4 +17,3 @@ Route::resource('/state', StateApiController::class);
 Route::resource('/city', CityApiController::class);
 Route::resource('/department', DepartmentApiController::class);
 Route::resource('/employee', EmployeeApiController::class);
-

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Country;
+use Illuminate\Support\Facades\Validator;
 
 class CountryApiController extends Controller
 {
@@ -25,8 +26,30 @@ class CountryApiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'code' => 'required',
+            'phonecode' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(
+                [
+                    'status' => false,
+                    'message' => 'validasi error',
+                    'error' => $validator->errors()
+                ],422);
+        }
+
+        $country = Country::create($request->all());
+        return response()->json(
+            [
+                'status' => 'success',
+                'message' => 'Country created successfully',
+                'data' => $country
+            ],201);
     }
+
 
     /**
      * Display the specified resource.

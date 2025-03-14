@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\State;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class StateApiController extends Controller
 {
@@ -25,7 +26,27 @@ class StateApiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'country_id' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(
+                [
+                    'status' => false,
+                    'message' => 'validasi error',
+                    'error' => $validator->errors()
+                ],422);
+        }
+
+        $state = State::create($request->all());
+        return response()->json(
+            [
+                'status' => 'success',
+                'message' => 'State created successfully',
+                'data' => $state
+            ],201);
     }
 
     /**
