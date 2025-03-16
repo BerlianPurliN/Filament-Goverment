@@ -84,6 +84,15 @@ class CityApiController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $city = City::findOrFail($id);
+        $city->delete();
+        if ($city) {
+            return response()->json(
+                [
+                    'status' => 'success',
+                    'data' => $city
+                ]
+            );
+        }
     }
 }

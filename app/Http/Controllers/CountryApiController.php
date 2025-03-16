@@ -86,6 +86,15 @@ class CountryApiController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $country = Country::findOrFail($id);
+        $country -> delete();
+        if ($country) {
+            return response()->json(
+                [
+                    'status' => 'success',
+                    'data' => $country
+                ]
+            );
+        }
     }
 }

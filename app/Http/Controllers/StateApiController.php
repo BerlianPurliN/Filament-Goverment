@@ -84,6 +84,15 @@ class StateApiController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $state = State::findOrFail($id);
+        $state->delete();
+        if ($state) {
+            return response()->json(
+                [
+                    'status' => 'success',
+                    'data' => $state
+                ]
+            );
+        }
     }
 }

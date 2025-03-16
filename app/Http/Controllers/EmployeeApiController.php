@@ -91,6 +91,15 @@ class EmployeeApiController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $employee = Employee::findOrFail($id);
+        $employee -> delete();
+        if ($employee) {
+            return response()->json(
+                [
+                    'status' => 'success',
+                    'data' => $employee
+                ]
+            );
+        }
     }
 }

@@ -83,6 +83,15 @@ class DepartmentApiController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $department = Department::findOrFail($id);
+        $department -> delete();
+        if ($department) {
+            return response()->json(
+                [
+                    'status' => 'success',
+                    'data' => $department
+                ]
+            );
+        }
     }
 }
