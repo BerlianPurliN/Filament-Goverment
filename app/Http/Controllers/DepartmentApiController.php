@@ -53,7 +53,21 @@ class DepartmentApiController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $department = Department::findOrFail($id);
+        if ($department) {
+            return response()->json(
+                [
+                    'status' => 'success',
+                    'data' => $department
+                ]
+            );
+        } else {
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'Department not found'
+                ],404);
+        }
     }
 
     /**

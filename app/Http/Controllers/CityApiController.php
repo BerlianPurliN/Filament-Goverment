@@ -54,7 +54,21 @@ class CityApiController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $city = City::findOrFail($id);
+        if ($city) {
+            return response()->json(
+                [
+                    'status' => 'success',
+                    'data' => $city
+                ]
+            );
+        } else {
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'City not found'
+                ],404);
+        }
     }
 
     /**

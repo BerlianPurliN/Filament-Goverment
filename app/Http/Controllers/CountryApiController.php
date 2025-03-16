@@ -56,7 +56,21 @@ class CountryApiController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $country = Country::findOrFail($id);
+        if ($country) {
+            return response()->json(
+                [
+                    'status' => 'success',
+                    'data' => $country
+                ]
+            );
+        } else {
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'Country not found'
+                ],404);
+        }
     }
 
     /**

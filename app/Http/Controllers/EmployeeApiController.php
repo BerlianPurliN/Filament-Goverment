@@ -61,7 +61,21 @@ class EmployeeApiController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $employee = Employee::findOrFail($id);
+        if ($employee) {
+            return response()->json(
+                [
+                    'status' => 'success',
+                    'data' => $employee
+                ]
+            );
+        } else {
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'Employee not found'
+                ],404);
+        }
     }
 
     /**

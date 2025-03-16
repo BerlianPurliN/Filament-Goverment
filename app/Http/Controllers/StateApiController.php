@@ -54,7 +54,21 @@ class StateApiController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $state = State::findOrFail($id);
+        if ($state) {
+            return response()->json(
+                [
+                    'status' => 'success',
+                    'data' => $state
+                ]
+            );
+        } else {
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'message' => 'State not found'
+                ],404);
+        }
     }
 
     /**
