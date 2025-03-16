@@ -76,7 +76,29 @@ class StateApiController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'country_id' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(
+                [
+                    'status' => false,
+                    'message' => 'validasi error',
+                    'error' => $validator->errors()
+                ],422);
+        }
+
+        $state = State::findOrFail($id);
+        $state->update($request->all());
+        return response()->json(
+            [
+                'status' => 'success',
+                'message' => 'State updated successfully',
+                'data' => $state
+            ]
+        );
     }
 
     /**

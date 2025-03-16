@@ -83,7 +83,36 @@ class EmployeeApiController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name',
+            'address',
+            'zip_code',
+            'date_hired',
+            'date_of_birth',
+            'country_id' => 'required',
+            'state_id' => 'required',
+            'city_id' => 'required',
+            'department_id' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(
+                [
+                    'status' => false,
+                    'message' => 'validasi error',
+                    'error' => $validator->errors()
+                ],422);
+        }
+
+        $employee = Employee::findOrFail($id);
+        $employee -> update($request->all());
+        return response()->json(
+            [
+                'status' => 'success',
+                'message' => 'Employee updated successfully',
+                'data' => $employee
+            ]
+        );
     }
 
     /**

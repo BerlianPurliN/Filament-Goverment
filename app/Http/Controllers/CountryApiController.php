@@ -78,7 +78,30 @@ class CountryApiController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'code' => 'required',
+            'phonecode' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(
+                [
+                    'status' => false,
+                    'message' => 'validasi error',
+                    'error' => $validator->errors()
+                ],422);
+        }
+
+        $country = Country::findOrFail($id);
+        $country -> update($request->all());
+        return response()->json(
+            [
+                'status' => 'success',
+                'message' => 'Country updated successfully',
+                'data' => $country
+            ]
+        );
     }
 
     /**

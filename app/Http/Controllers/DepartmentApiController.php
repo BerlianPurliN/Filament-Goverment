@@ -75,7 +75,28 @@ class DepartmentApiController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(
+                [
+                    'status' => false,
+                    'message' => 'validasi error',
+                    'error' => $validator->errors()
+                ],422);
+        }
+
+        $department = Department::findOrFail($id);
+        $department -> update($request->all());
+        return response()->json(
+            [
+                'status' => 'success',
+                'message' => 'Department updated successfully',
+                'data' => $department
+            ]
+        );
     }
 
     /**
