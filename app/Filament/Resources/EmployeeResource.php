@@ -38,15 +38,24 @@ class EmployeeResource extends Resource
                     Forms\Components\Grid::make()
                         ->schema([
                             Forms\Components\TextInput::make('name')
+                                ->label('Nama')
                                 ->required()
                                 ->maxLength(255),
                             Forms\Components\TextInput::make('address')
                                 ->required()
+                                ->label('Alamat')
                                 ->maxLength(255),
                             Forms\Components\DatePicker::make('date_hired')
+                                ->label('Tanggal Masuk')
                                 ->required(),
                             Forms\Components\DatePicker::make('date_of_birth')
+                                ->label('Tanggal Lahir')
                                 ->required(),
+                            Forms\Components\FileUpload::make('photo')
+                                ->label('Photo')
+                                ->image()
+                                ->required()
+                                ->maxSize(1024),
                         ])
                 ]),
                 Section::make('Employee address')
@@ -55,30 +64,30 @@ class EmployeeResource extends Resource
                         ->schema([
                             Select::make('country_id')
                                 ->options(Country::pluck('name', 'id'))
-                                ->label('Country')
+                                ->label('Negara')
                                 ->searchable()
                                 ->required()
                                 ->preload(),
                             Select::make('state_id')
                                 ->options(State::pluck('name', 'id'))
-                                ->label('State')
+                                ->label('Provinsi')
                                 ->searchable()
                                 ->required()
                                 ->preload(),
                             Select::make('city_id')
                                 ->options(City::pluck('name', 'id'))
-                                ->label('City')
+                                ->label('Kotaity')
                                 ->searchable()
                                 ->required()
                                 ->preload(),
                             Select::make('department_id')
                                 ->options(Department::pluck('name', 'id'))
-                                ->label('Department')
+                                ->label('Departemen')
                                 ->searchable()
                                 ->required()
                                 ->preload(),
                             TextInput::make('zip_code')
-                                ->label('Zip Code')
+                                ->label('Kode Pos')
                                 ->required()
                                 ->numeric(),
                         ])
@@ -103,6 +112,8 @@ class EmployeeResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('date_of_birth')
                     ->date()
+                    ->sortable(),
+                Tables\Columns\ImageColumn::make('photo')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

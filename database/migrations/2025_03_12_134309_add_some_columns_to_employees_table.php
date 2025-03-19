@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('state_id')->constrained();
             $table->foreignId('city_id')->constrained();
             $table->foreignId('department_id')->constrained();
+            $table->string('photo')->nullable();
             $table->integer('zip_code');
         });
     }
@@ -25,12 +26,12 @@ return new class extends Migration
      */
     public function down(): void
     {
-        // Schema::table('employees', function (Blueprint $table) {
-        //     $table->dropColumn('country_id', 'state_id', 'city_id', 'department_id', 'zip_code');
-        //     $table->dropForeign(['country_id']);
-        //     $table->dropForeign(['state_id']);
-        //     $table->dropForeign(['city_id']);
-        //     $table->dropForeign(['department_id']);
-        // });
+        Schema::table('employees', function (Blueprint $table) {
+            $table->dropColumn('country_id', 'state_id', 'city_id', 'department_id', 'zip_code', 'photo');
+            $table->dropForeign(['country_id']);
+            $table->dropForeign(['state_id']);
+            $table->dropForeign(['city_id']);
+            $table->dropForeign(['department_id']);
+        });
     }
 };
